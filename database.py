@@ -15,6 +15,7 @@ async def init_db():
                 player_count INTEGER NOT NULL,
                 round_duration_minutes INTEGER NOT NULL,
                 announce_channel_id TEXT,
+                announce_role_id TEXT,
                 alert_minutes_before_end INTEGER DEFAULT 5,
                 current_round INTEGER DEFAULT 0,
                 status TEXT DEFAULT 'idle'
@@ -70,9 +71,9 @@ async def set_tournament_config(config: dict):
         await db.execute("""
             INSERT OR REPLACE INTO tournament_config 
             (id, player_count, round_duration_minutes, announce_channel_id, 
-             alert_minutes_before_end, current_round, status)
+             announce_role_id, alert_minutes_before_end, current_round, status)
             VALUES (1, :player_count, :round_duration_minutes, :announce_channel_id,
-                    :alert_minutes_before_end, :current_round, :status)
+                    :announce_role_id, :alert_minutes_before_end, :current_round, :status)
         """, config)
         await db.commit()
 
